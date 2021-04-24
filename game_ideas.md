@@ -9,4 +9,24 @@
 - A game where you are mining, looking for water for your town.
 - A game where you free the waters of the deep. The Deep Fountains talked about in the Bible and other myths
 
+# CHOSEN IDEA
+
+- You live in a future, humanity lives in floating cities, an alien spaceship caused everything to fall apart. Now you have to go and go down to the surface
+
+# Game mechanics
+
+- Different stages with different environments
+- You have some backpack that allows you to glide
+- You can wall jump with the help of the backpack, walljumps waste more gas due to quick bursts
+
+
+# Challenges to overcome
+
+- Make a character that has a parachute and can do little bursts
+- Make still platforms
+- Make falling platforms 
+- Make platforms that fall when stepped on
+- Make it progresively difficult
+- Maybe make stages
+- Make the parachute / jetpack work with batteries or something
 
