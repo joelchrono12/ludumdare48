@@ -431,8 +431,16 @@ wait_time = 0.1
 one_shot = true
 
 [node name="JetpackLimit" type="Timer" parent="."]
-wait_time = 3.5
+wait_time = 2.8
 one_shot = true
+
+[node name="Label" type="Label" parent="."]
+margin_top = -48.0
+margin_right = 96.0
+margin_bottom = -32.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [connection signal="killed" from="." to="StateMachinePlayer" method="_on_Player_killed"]
 [connection signal="victory" from="." to="Camera2D" method="_on_Player_victory"]

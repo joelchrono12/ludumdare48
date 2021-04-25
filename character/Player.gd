@@ -52,6 +52,7 @@ onready var stick_to_wall_timer = $WallslideStick
 onready var coyote_timer = $CoyoteTimer
 onready var jetpack_limit = $JetpackLimit
 onready var attach_pos = $AttachPosition
+onready var sm = $Label
 
 # onready var jump_sound = $SFX/jumpsound
 # onready var hurt_sound = $SFX/hurtsound
@@ -82,7 +83,6 @@ func _apply_wall_stick():
 	#velocity.x = wall_direction*100
 	
 func _apply_gravity(delta):
-	print("Wait time: ", jetpack_limit.wait_time, "Time left: ", jetpack_limit.time_left )
 	velocity.y +=gravity*delta
 	if is_jumping and velocity.y >=0:
 		is_jumping = false
@@ -186,4 +186,3 @@ func victory():
 
 func _on_JetpackLimit_timeout() -> void:
 	has_gas = false
-	jetpack_limit.wait_time = 0

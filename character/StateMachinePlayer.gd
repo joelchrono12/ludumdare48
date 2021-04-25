@@ -37,6 +37,7 @@ func _input(event):
 			set_state(states.fall)
 
 func _state_logic(delta):
+	parent.sm.text = str(states.keys()[state]) + "Gas: " + str(parent.jetpack_limit.time_left)
 	parent._apply_gravity(delta)
 	if state == states.glide:
 		parent.glide()
@@ -100,7 +101,7 @@ func _get_transition(delta):
 
 
 func _enter_state(new_state,old_state):
-	print(states.keys()[state])
+
 	match new_state:
 		states.idle:
 			parent.snap = Vector2.DOWN*12
@@ -112,7 +113,7 @@ func _enter_state(new_state,old_state):
 			if old_state == states.wall_slide:
 				if parent.jetpack_limit.wait_time < 0.6:
 					parent.has_gas = false
-				parent.jetpack_limit.wait_time -= 0.5
+				parent.jetpack_limit.wait_time -= 0.3
 				
 			parent.anim_player.play("jump")
 		states.fall:
