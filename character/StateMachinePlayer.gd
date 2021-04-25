@@ -1,4 +1,4 @@
-extends "res://Statemachine.gd"
+extends "res://scripts/baseSM.gd"
 
 func _ready():
 	add_state("idle")
@@ -30,9 +30,7 @@ func _input(event):
 		if event.is_action_released("jump"):
 			parent.cut_jump()
 	if state == states.wall_slide:
-		print(parent.is_on_floor(), parent.has_gas)
 		if event.is_action_pressed("jump") and parent.has_gas:
-			print("Jumping from wall slide")
 			parent.wall_jump()
 			set_state(states.jump)
 		if !parent.has_gas:
@@ -112,8 +110,10 @@ func _enter_state(new_state,old_state):
 			parent.anim_player.play("move")
 		states.jump:
 			if old_state == states.wall_slide:
-				if parent.jetpack_limit.wait_time >= 0:
-					parent.jetpack_limit.wait_time -= 0.7
+				if parent.jetpack_limit.wait_time < 0.6:
+					parent.has_gas = false
+				parent.jetpack_limit.wait_time -= 0.5
+				
 			parent.anim_player.play("jump")
 		states.fall:
 			parent.anim_player.play("fall")
@@ -150,6 +150,7 @@ func _exit_state(old_state,new_state):
 			parent.wall_slide_cooldown.start()
 		states.glide:
 			parent.jetpack_limit.wait_time = parent.jetpack_limit.time_left
+			parent.jetpack_limit.stop()
 
 
 func set_state(new_state):
