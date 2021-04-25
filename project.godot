@@ -12,7 +12,7 @@ _global_script_classes=[ {
 "base": "Node",
 "class": "StateMachine",
 "language": "GDScript",
-"path": "res://Statemachine.gd"
+"path": "res://scripts/baseSM.gd"
 } ]
 _global_script_class_icons={
 "StateMachine": ""
@@ -21,7 +21,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Ludum Dare 48"
-run/main_scene="res://World.tscn"
+run/main_scene="res://levels/World.tscn"
 config/icon="res://icon.png"
 
 [display]

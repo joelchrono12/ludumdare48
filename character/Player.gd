@@ -78,10 +78,11 @@ func _apply_movement(delta):
 	is_grounded = is_on_floor()
 	
 func _apply_wall_stick():
-	#snap = Vector2(wall_direction*32,0)
-	velocity.x = wall_direction*1000
+	snap = Vector2(wall_direction*32,0)
+	#velocity.x = wall_direction*100
 	
 func _apply_gravity(delta):
+	print("Wait time: ", jetpack_limit.wait_time, "Time left: ", jetpack_limit.time_left )
 	velocity.y +=gravity*delta
 	if is_jumping and velocity.y >=0:
 		is_jumping = false
@@ -116,14 +117,12 @@ func _handle_move_input():
 		body.scale.x = move_direction
 		
 		
-func glide():
+func glide() -> void:
 	if jetpack_limit.time_left != 0: 
-		print(jetpack_limit.time_left)
-	velocity.y = lerp(velocity.y,-100,0.13)
-	pass
+		velocity.y = lerp(velocity.y,-100,0.13)
 
 
-func get_h_weight():
+func get_h_weight() -> float:
 	if is_on_floor():
 		return 0.15
 	else:
@@ -187,3 +186,4 @@ func victory():
 
 func _on_JetpackLimit_timeout() -> void:
 	has_gas = false
+	jetpack_limit.wait_time = 0
