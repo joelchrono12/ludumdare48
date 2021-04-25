@@ -8,10 +8,10 @@
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 7, 13 )
 
-[sub_resource type="OccluderPolygon2D" id=3]
+[sub_resource type="OccluderPolygon2D" id=2]
 polygon = PoolVector2Array( -4.18235, -10.4023, 4.22661, -11.0329, 4.43684, 11.5661, -3.55168, 11.461 )
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=3]
 tracks/0/type = "value"
 tracks/0/path = NodePath("icon:modulate")
 tracks/0/interp = 1
@@ -49,7 +49,7 @@ tracks/2/keys = {
 "values": [ Vector2( 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=4]
 length = 0.5
 step = 0.05
 tracks/0/type = "value"
@@ -77,7 +77,7 @@ tracks/1/keys = {
 "values": [ 10 ]
 }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=5]
 length = 0.4
 tracks/0/type = "value"
 tracks/0/path = NodePath("icon:position")
@@ -116,7 +116,7 @@ tracks/2/keys = {
 "values": [ Vector2( 0.7, 1.4 ), Vector2( 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=6]
 length = 0.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("icon:position")
@@ -155,7 +155,7 @@ tracks/2/keys = {
 "values": [ 0 ]
 }
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=7]
 length = 0.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("icon:scale")
@@ -182,7 +182,7 @@ tracks/1/keys = {
 "values": [ 8 ]
 }
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=8]
 length = 0.6
 loop = true
 tracks/0/type = "value"
@@ -222,7 +222,7 @@ tracks/2/keys = {
 "values": [ 1, 2, 3, 4, 5, 0 ]
 }
 
-[sub_resource type="Animation" id=10]
+[sub_resource type="Animation" id=9]
 length = 0.3
 tracks/0/type = "value"
 tracks/0/path = NodePath("icon:frame")
@@ -261,7 +261,7 @@ tracks/2/keys = {
 "values": [ Vector2( 1.4, 0.8 ), Vector2( 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=11]
+[sub_resource type="Animation" id=10]
 length = 0.5
 loop = true
 tracks/0/type = "value"
@@ -289,7 +289,7 @@ tracks/1/keys = {
 "values": [ Vector2( 0, 0 ), Vector2( 0, -7.04409 ) ]
 }
 
-[sub_resource type="Animation" id=12]
+[sub_resource type="Animation" id=11]
 length = 0.4
 tracks/0/type = "value"
 tracks/0/path = NodePath("icon:position")
@@ -348,25 +348,27 @@ shape = SubResource( 1 )
 [node name="Body" type="Node2D" parent="."]
 
 [node name="icon" type="Sprite" parent="Body"]
+position = Vector2( 0, 2.7 )
+scale = Vector2( 1.6, 0.8 )
 texture = ExtResource( 2 )
 hframes = 6
 vframes = 2
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="Body/icon"]
-occluder = SubResource( 3 )
+occluder = SubResource( 2 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Body"]
-anims/dead = SubResource( 4 )
-anims/fall = SubResource( 5 )
-anims/grab = SubResource( 6 )
-anims/idle = SubResource( 7 )
-anims/jump = SubResource( 8 )
-anims/move = SubResource( 9 )
-anims/squash = SubResource( 10 )
-anims/victory = SubResource( 11 )
+anims/dead = SubResource( 3 )
+anims/fall = SubResource( 4 )
+anims/grab = SubResource( 5 )
+anims/idle = SubResource( 6 )
+anims/jump = SubResource( 7 )
+anims/move = SubResource( 8 )
+anims/squash = SubResource( 9 )
+anims/victory = SubResource( 10 )
 
 [node name="Effect_Player" type="AnimationPlayer" parent="Body"]
-anims/land = SubResource( 12 )
+anims/land = SubResource( 11 )
 
 [node name="WallGrabRaycast" type="Node2D" parent="."]
 
@@ -428,7 +430,13 @@ one_shot = true
 wait_time = 0.1
 one_shot = true
 
+[node name="JetpackLimit" type="Timer" parent="."]
+wait_time = 3.5
+one_shot = true
+
 [connection signal="killed" from="." to="StateMachinePlayer" method="_on_Player_killed"]
 [connection signal="victory" from="." to="Camera2D" method="_on_Player_victory"]
 [connection signal="victory" from="." to="StateMachinePlayer" method="_on_Player_victory"]
 [connection signal="timeout" from="WallslideStick" to="StateMachinePlayer" method="_on_WallslideStick_timeout"]
+[connection signal="timeout" from="JetpackLimit" to="." method="_on_JetpackLimit_timeout"]
+[connection signal="timeout" from="JetpackLimit" to="StateMachinePlayer" method="_on_JetpackLimit_timeout"]

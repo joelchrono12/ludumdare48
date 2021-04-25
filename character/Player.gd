@@ -31,6 +31,7 @@ var wall_direction = 1
 var snap = Vector2.DOWN*12
 var slide_velocity = 15
 var current_state = null
+var has_gas = true
 
 onready var grabbing_shape = $Grabbing_shape
 onready var left_raycast = $WallGrabRaycast/Right
@@ -49,6 +50,7 @@ onready var physics_shape =$PhysicsShape
 onready var wall_slide_cooldown = $WallslideCooldown
 onready var stick_to_wall_timer = $WallslideStick
 onready var coyote_timer = $CoyoteTimer
+onready var jetpack_limit = $JetpackLimit
 onready var attach_pos = $AttachPosition
 
 # onready var jump_sound = $SFX/jumpsound
@@ -112,9 +114,15 @@ func _handle_move_input():
 	velocity.x = lerp(velocity.x,move_speed*move_direction,get_h_weight())
 	if move_direction !=0:
 		body.scale.x = move_direction
-	#physics_shape.position.x = move_direction
 		
 		
+func glide():
+	if jetpack_limit.time_left != 0: 
+		print(jetpack_limit.time_left)
+	velocity.y = lerp(velocity.y,-100,0.13)
+	pass
+
+
 func get_h_weight():
 	if is_on_floor():
 		return 0.15
@@ -176,13 +184,6 @@ func victory():
 	is_dead=false
 	has_won = true
 
-func _on_AllowedGrabTimer_timeout():
-	emit_signal("killed")
 
-func _on_GUI_enable_camera():
-	print("CAMERA ENABLED")
-	cam.enable_camera = true
-
-
-func _on_GUI_pause_camera():
-	cam.enable_camera = false
+func _on_JetpackLimit_timeout() -> void:
+	has_gas = false
