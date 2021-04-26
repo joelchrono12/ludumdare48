@@ -1,12 +1,13 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://character/Player.gd" type="Script" id=1]
 [ext_resource path="res://character/Player.png" type="Texture" id=2]
 [ext_resource path="res://character/StateMachinePlayer.gd" type="Script" id=3]
 [ext_resource path="res://character/Camera2D.gd" type="Script" id=4]
+[ext_resource path="res://assets/player/player.png" type="Texture" id=5]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 7, 13 )
+extents = Vector2( 4, 6 )
 
 [sub_resource type="OccluderPolygon2D" id=2]
 polygon = PoolVector2Array( -4.18235, -10.4023, 4.22661, -11.0329, 4.43684, 11.5661, -3.55168, 11.461 )
@@ -50,7 +51,8 @@ tracks/2/keys = {
 }
 
 [sub_resource type="Animation" id=4]
-length = 0.5
+length = 0.3
+loop = true
 step = 0.05
 tracks/0/type = "value"
 tracks/0/path = NodePath("icon:scale")
@@ -75,6 +77,59 @@ tracks/1/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 0,
 "values": [ 10 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Sprite:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.15 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 9, 10 ]
+}
+
+[sub_resource type="Animation" id=12]
+resource_name = "glide"
+length = 0.4
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 18, 17 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("propulsor:emitting")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.0561061 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("../ProgressBar:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.0388135 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
 }
 
 [sub_resource type="Animation" id=5]
@@ -115,6 +170,42 @@ tracks/2/keys = {
 "update": 0,
 "values": [ Vector2( 0.7, 1.4 ), Vector2( 1, 1 ) ]
 }
+tracks/3/type = "value"
+tracks/3/path = NodePath("Sprite:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 14, 15 ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Sprite:scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 0.3, 1 ),
+"update": 0,
+"values": [ Vector2( 0.7, 1.4 ), Vector2( 1, 1 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Sprite:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 0.3, 1 ),
+"update": 0,
+"values": [ Vector2( 1.5, -2 ), Vector2( 0, -2 ) ]
+}
 
 [sub_resource type="Animation" id=6]
 length = 0.5
@@ -154,9 +245,58 @@ tracks/2/keys = {
 "update": 0,
 "values": [ 0 ]
 }
+tracks/3/type = "value"
+tracks/3/path = NodePath("Sprite:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("../ProgressBar:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("../ProgressBar:percent_visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray(  ),
+"transitions": PoolRealArray(  ),
+"update": 1,
+"values": [  ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("../ProgressBar:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0.3 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
 
 [sub_resource type="Animation" id=7]
-length = 0.5
+length = 0.3
+step = 0.05
 tracks/0/type = "value"
 tracks/0/path = NodePath("icon:scale")
 tracks/0/interp = 1
@@ -164,7 +304,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0.00961971, 0.420291 ),
+"times": PoolRealArray( 0, 0.3 ),
 "transitions": PoolRealArray( 0.241484, 1 ),
 "update": 0,
 "values": [ Vector2( 0.4, 1.4 ), Vector2( 1, 1 ) ]
@@ -180,6 +320,30 @@ tracks/1/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 0,
 "values": [ 8 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Sprite:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.145966 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 8, 7 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Sprite:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 0.241, 1 ),
+"update": 0,
+"values": [ Vector2( 0.4, 1.3 ), Vector2( 1, 1 ) ]
 }
 
 [sub_resource type="Animation" id=8]
@@ -216,6 +380,18 @@ tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 1, 2, 3, 4, 5, 0 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Sprite:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
 "times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
 "update": 1,
@@ -315,14 +491,61 @@ tracks/1/keys = {
 "update": 0,
 "values": [ Vector2( 1.6, 0.8 ), Vector2( 1, 1 ) ]
 }
+tracks/2/type = "value"
+tracks/2/path = NodePath("Sprite:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 0.3, 1 ),
+"update": 0,
+"values": [ Vector2( 1.4, 1 ), Vector2( 1, 1 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Sprite:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, -1.5 ), Vector2( 0, -2 ) ]
+}
 
 [node name="Player" type="KinematicBody2D"]
 collision_layer = 8
 collision_mask = 3
 script = ExtResource( 1 )
 __meta__ = {
-"_edit_group_": true,
 "_edit_horizontal_guides_": [ 0.0, 0.0, 0.0 ]
+}
+
+[node name="Label" type="Label" parent="."]
+margin_top = -48.0
+margin_right = 96.0
+margin_bottom = -32.0
+text = "hola mundo"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+visible = false
+modulate = Color( 1, 1, 1, 0 )
+margin_left = -16.0
+margin_top = -20.0
+margin_right = 16.0
+margin_bottom = -6.0
+rect_scale = Vector2( 1, 0.5 )
+size_flags_horizontal = 0
+max_value = 5.0
+percent_visible = false
+__meta__ = {
+"_edit_use_anchors_": false
 }
 
 [node name="AttachPosition" type="Position2D" parent="."]
@@ -345,11 +568,71 @@ script = ExtResource( 3 )
 [node name="PhysicsShape" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
 
+[node name="WallGrabRaycast" type="Node2D" parent="."]
+
+[node name="Right" type="Node2D" parent="WallGrabRaycast"]
+
+[node name="RightWall" type="RayCast2D" parent="WallGrabRaycast/Right"]
+position = Vector2( 4, -4 )
+rotation = -1.5708
+enabled = true
+cast_to = Vector2( 0, 1 )
+collision_mask = 2
+
+[node name="RightWall2" type="RayCast2D" parent="WallGrabRaycast/Right"]
+position = Vector2( 4, 2 )
+rotation = -1.5708
+enabled = true
+exclude_parent = false
+cast_to = Vector2( 0, 1 )
+collision_mask = 2
+
+[node name="RightWall3" type="RayCast2D" parent="WallGrabRaycast/Right"]
+position = Vector2( 4, 6 )
+rotation = -1.5708
+exclude_parent = false
+cast_to = Vector2( 0, 3 )
+collision_mask = 2
+
+[node name="Left" type="Node2D" parent="WallGrabRaycast"]
+
+[node name="LeftWall" type="RayCast2D" parent="WallGrabRaycast/Left"]
+position = Vector2( -4, -4 )
+rotation = 1.5708
+enabled = true
+cast_to = Vector2( 0, 1 )
+collision_mask = 2
+
+[node name="LeftWall2" type="RayCast2D" parent="WallGrabRaycast/Left"]
+position = Vector2( -4, 2 )
+rotation = 1.5708
+enabled = true
+cast_to = Vector2( 0, 1 )
+collision_mask = 2
+
+[node name="LeftWall3" type="RayCast2D" parent="WallGrabRaycast/Left"]
+position = Vector2( -4, 6 )
+rotation = 1.5708
+cast_to = Vector2( 0, 3 )
+collision_mask = 2
+
 [node name="Body" type="Node2D" parent="."]
 
+[node name="propulsor" type="CPUParticles2D" parent="Body"]
+position = Vector2( -2.2, 4 )
+emitting = false
+amount = 20
+lifetime = 0.4
+randomness = 0.2
+local_coords = false
+direction = Vector2( 0, 1 )
+spread = 32.0
+initial_velocity = 40.2
+initial_velocity_random = 0.43
+color = Color( 0.862745, 0.909804, 0.321569, 1 )
+
 [node name="icon" type="Sprite" parent="Body"]
-position = Vector2( 0, 2.7 )
-scale = Vector2( 1.6, 0.8 )
+visible = false
 texture = ExtResource( 2 )
 hframes = 6
 vframes = 2
@@ -360,6 +643,7 @@ occluder = SubResource( 2 )
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Body"]
 anims/dead = SubResource( 3 )
 anims/fall = SubResource( 4 )
+anims/glide = SubResource( 12 )
 anims/grab = SubResource( 5 )
 anims/idle = SubResource( 6 )
 anims/jump = SubResource( 7 )
@@ -370,53 +654,12 @@ anims/victory = SubResource( 10 )
 [node name="Effect_Player" type="AnimationPlayer" parent="Body"]
 anims/land = SubResource( 11 )
 
-[node name="WallGrabRaycast" type="Node2D" parent="."]
-
-[node name="Right" type="Node2D" parent="WallGrabRaycast"]
-
-[node name="RightWall" type="RayCast2D" parent="WallGrabRaycast/Right"]
-position = Vector2( 7, -12 )
-rotation = -1.5708
-enabled = true
-cast_to = Vector2( 0, 3 )
-collision_mask = 2
-
-[node name="RightWall2" type="RayCast2D" parent="WallGrabRaycast/Right"]
-position = Vector2( 7, 0 )
-rotation = -1.5708
-enabled = true
-exclude_parent = false
-cast_to = Vector2( 0, 3 )
-collision_mask = 2
-
-[node name="RightWall3" type="RayCast2D" parent="WallGrabRaycast/Right"]
-position = Vector2( 7, 6 )
-rotation = -1.5708
-exclude_parent = false
-cast_to = Vector2( 0, 3 )
-collision_mask = 2
-
-[node name="Left" type="Node2D" parent="WallGrabRaycast"]
-
-[node name="LeftWall" type="RayCast2D" parent="WallGrabRaycast/Left"]
-position = Vector2( -7, -12 )
-rotation = 1.5708
-enabled = true
-cast_to = Vector2( 0, 3 )
-collision_mask = 2
-
-[node name="LeftWall2" type="RayCast2D" parent="WallGrabRaycast/Left"]
-position = Vector2( -7, 0 )
-rotation = 1.5708
-enabled = true
-cast_to = Vector2( 0, 3 )
-collision_mask = 2
-
-[node name="LeftWall3" type="RayCast2D" parent="WallGrabRaycast/Left"]
-position = Vector2( -7, 6 )
-rotation = 1.5708
-cast_to = Vector2( 0, 3 )
-collision_mask = 2
+[node name="Sprite" type="Sprite" parent="Body"]
+position = Vector2( 0, -1.5 )
+scale = Vector2( 1.4, 1 )
+texture = ExtResource( 5 )
+hframes = 7
+vframes = 6
 
 [node name="WallslideCooldown" type="Timer" parent="."]
 wait_time = 0.2
@@ -431,12 +674,12 @@ wait_time = 0.1
 one_shot = true
 
 [node name="JetpackLimit" type="Timer" parent="."]
-wait_time = 3.5
+wait_time = 4.5
 one_shot = true
 
 [connection signal="killed" from="." to="StateMachinePlayer" method="_on_Player_killed"]
-[connection signal="victory" from="." to="Camera2D" method="_on_Player_victory"]
 [connection signal="victory" from="." to="StateMachinePlayer" method="_on_Player_victory"]
+[connection signal="victory" from="." to="Camera2D" method="_on_Player_victory"]
 [connection signal="timeout" from="WallslideStick" to="StateMachinePlayer" method="_on_WallslideStick_timeout"]
-[connection signal="timeout" from="JetpackLimit" to="." method="_on_JetpackLimit_timeout"]
 [connection signal="timeout" from="JetpackLimit" to="StateMachinePlayer" method="_on_JetpackLimit_timeout"]
+[connection signal="timeout" from="JetpackLimit" to="." method="_on_JetpackLimit_timeout"]
