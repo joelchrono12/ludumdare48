@@ -33,3 +33,7 @@ You live in a future, humanity lives in floating cities, an alien spaceship caus
 - Make the parachute / jetpack work with batteries or something
 - Make the parachute lose more energy when using burst jumps
 
+## Credits
+
+[Here](./CREDITS.md)
+
