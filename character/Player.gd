@@ -6,8 +6,7 @@ extends KinematicBody2D
 # I am also reusing my sprites for Cliff Hanger, I will change them for the final game
 const UP = Vector2.UP
 
-signal wall_slide_state 
-signal wall_slide_exited
+
 signal victory()
 signal state_change(states,state)
 signal killed()
@@ -17,7 +16,7 @@ var WALL_JUMP_VELOCITY = Vector2(12*6.5,-120)
 var KNOCKBACK_VELOCITY = Vector2(12*5,-100)
 
 export var move_speed = 12*6
-export var jump_velocity=-150
+export var jump_velocity=-160
 export var gravity = 420
 var jp_acceleration = -900
 var jp_max_vel = -100
@@ -58,6 +57,7 @@ onready var attach_pos = $AttachPosition
 onready var sm = $Label
 onready var propulsion = $Body/propulsor
 onready var gas_meter = $ProgressBar
+onready var cam_shake = $CamShake
 # onready var jump_sound = $SFX/jumpsound
 # onready var hurt_sound = $SFX/hurtsound
 # onready var dead_sound = $SFX/deadsound
@@ -67,13 +67,11 @@ var move_direction
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	gas_meter.hide()
-	connect("killed",get_parent().get_node("Background/GUI"),"_on_Player_killed")
 	connect("state_change",get_parent().get_node("Background/GUI"),"_on_Player_state_change")
-	connect("victory",get_parent().get_node("Background/GUI"),"_on_Player_victory")
-	connect("wall_slide_exited",get_parent().get_node("Background/GUI"),"_on_Player_wall_slide_exited")
-	connect("wall_slide_state",get_parent().get_node("Background/GUI"),"_on_Player_wall_slide_state")
-	pass # Replace with function body.
-
+#	connect("victory",get_parent().get_node("Background/GUI"),"_on_Player_victory")
+#	connect("wall_slide_exited",get_parent().get_node("Background/GUI"),"_on_Player_wall_slide_exited")
+#	connect("wall_slide_state",get_parent().get_node("Background/GUI"),"_on_Player_wall_slide_state")
+#	pass # Replace with function body.
 func _apply_movement(delta):
 	var was_on_floor = is_on_floor()
 	

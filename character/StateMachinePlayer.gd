@@ -35,7 +35,7 @@ func _input(event):
 			set_state(states.jump)
 
 func _state_logic(delta):
-	parent.sm.text = str(states.keys()[state]) + "Gas: " + str(parent.jetpack_limit.time_left)
+	parent.sm.text = str(states.keys()[state])
 	parent._apply_gravity(delta)
 	if state == states.glide:
 		parent.glide(delta)
@@ -73,14 +73,14 @@ func _get_transition(delta):
 			elif abs(parent.velocity.x) <5:
 				return states.idle
 		states.jump:
-			if parent.wall_direction !=0 and parent.wall_slide_cooldown.is_stopped() and !parent.is_on_edge:# and parent.has_gas: # and Input.is_action_pressed("dash"):
+			if parent.wall_direction !=0 and parent.wall_slide_cooldown.is_stopped() and !parent.is_on_edge and Input.is_action_pressed("climb"):# and parent.has_gas: # and Input.is_action_pressed("dash"):
 				return states.wall_slide
 			elif parent.is_on_floor():
 				return states.idle
 			elif parent.velocity.y>=0:
 				return states.fall
 		states.fall:
-			if parent.wall_direction !=0 and parent.wall_slide_cooldown.is_stopped() and !parent.is_on_edge and parent.move_direction != 0:# and parent.has_gas:# and Input.is_action_pressed("dash"):
+			if parent.wall_direction !=0 and parent.wall_slide_cooldown.is_stopped() and !parent.is_on_edge and parent.move_direction != 0 and Input.is_action_pressed("climb"):# and parent.has_gas:# and Input.is_action_pressed("dash"):
 				return states.wall_slide
 			elif parent.is_on_floor():
 				squash()
@@ -114,11 +114,14 @@ func _enter_state(new_state,old_state):
 					parent.gas_meter.value = 0
 				parent.jetpack_limit.wait_time -= 0.3
 				parent.gas_meter.value -= 0.3
+			else:
+				Sfx.jump()
 				
 			parent.anim_player.play("jump")
 		states.fall:
 			parent.anim_player.play("fall")
 		states.wall_slide:
+			Sfx.grab()
 			parent._stick_to_moving_walls()
 			parent.emit_signal("wall_slide_state")
 			parent.velocity.y = -20
@@ -126,6 +129,7 @@ func _enter_state(new_state,old_state):
 			parent.anim_player.play("grab")
 			parent.body.scale.x = parent.wall_direction
 		states.dead:
+			Sfx.die()
 			parent.die()
 			parent.velocity.x = 0.0
 			parent.anim_player.play("dead")
@@ -133,6 +137,7 @@ func _enter_state(new_state,old_state):
 			parent.velocity.x = 0.0
 			parent.anim_player.play("victory")
 		states.glide:
+			Sfx.glide()
 			parent.anim_player.play("glide")
 			parent.jetpack_limit.start()
 
