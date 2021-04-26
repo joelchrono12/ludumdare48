@@ -33,14 +33,12 @@ func _input(event):
 		if event.is_action_pressed("jump") and parent.has_gas:
 			parent.wall_jump()
 			set_state(states.jump)
-		if !parent.has_gas:
-			set_state(states.fall)
 
 func _state_logic(delta):
 	parent.sm.text = str(states.keys()[state]) + "Gas: " + str(parent.jetpack_limit.time_left)
 	parent._apply_gravity(delta)
 	if state == states.glide:
-		parent.glide()
+		parent.glide(delta)
 	if state != states.dead and state !=states.victory:
 		parent._update_move_direction()
 	parent._update_wall_direction()
@@ -75,14 +73,14 @@ func _get_transition(delta):
 			elif abs(parent.velocity.x) <5:
 				return states.idle
 		states.jump:
-			if parent.wall_direction !=0 and parent.wall_slide_cooldown.is_stopped() and !parent.is_on_edge and parent.has_gas: # and Input.is_action_pressed("dash"):
+			if parent.wall_direction !=0 and parent.wall_slide_cooldown.is_stopped() and !parent.is_on_edge:# and parent.has_gas: # and Input.is_action_pressed("dash"):
 				return states.wall_slide
 			elif parent.is_on_floor():
 				return states.idle
 			elif parent.velocity.y>=0:
 				return states.fall
 		states.fall:
-			if parent.wall_direction !=0 and parent.wall_slide_cooldown.is_stopped() and !parent.is_on_edge and parent.has_gas:# and Input.is_action_pressed("dash"):
+			if parent.wall_direction !=0 and parent.wall_slide_cooldown.is_stopped() and !parent.is_on_edge and parent.move_direction != 0:# and parent.has_gas:# and Input.is_action_pressed("dash"):
 				return states.wall_slide
 			elif parent.is_on_floor():
 				squash()
@@ -90,7 +88,7 @@ func _get_transition(delta):
 			elif parent.velocity.y<0:
 				return states.jump 
 		states.wall_slide:
-			if parent.is_on_floor() and parent.slide_velocity == 0:
+			if parent.is_on_floor() or parent.slide_velocity == 0:
 				return states.idle
 			elif parent.wall_direction == 0 or parent.is_on_edge:
 				return states.fall
@@ -104,25 +102,23 @@ func _enter_state(new_state,old_state):
 
 	match new_state:
 		states.idle:
-			parent.snap = Vector2.DOWN*12
+			parent.snap = Vector2.DOWN*2
 			parent.anim_player.play("idle")
 		states.move:
-			parent.snap = Vector2.DOWN*12
+			parent.snap = Vector2.DOWN*2
 			parent.anim_player.play("move")
 		states.jump:
 			if old_state == states.wall_slide:
 				if parent.jetpack_limit.wait_time < 0.6:
 					parent.has_gas = false
+					parent.gas_meter.value = 0
 				parent.jetpack_limit.wait_time -= 0.3
+				parent.gas_meter.value -= 0.3
 				
 			parent.anim_player.play("jump")
 		states.fall:
 			parent.anim_player.play("fall")
 		states.wall_slide:
-			if parent.stick_to_wall:
-				pass 
-			elif !parent.stick_to_wall: 
-				pass
 			parent._stick_to_moving_walls()
 			parent.emit_signal("wall_slide_state")
 			parent.velocity.y = -20
@@ -137,6 +133,7 @@ func _enter_state(new_state,old_state):
 			parent.velocity.x = 0.0
 			parent.anim_player.play("victory")
 		states.glide:
+			parent.anim_player.play("glide")
 			parent.jetpack_limit.start()
 
 
@@ -147,11 +144,15 @@ func _exit_state(old_state,new_state):
 			parent.moving_leftcast.set_deferred("enabled",false)
 			parent.emit_signal("wall_slide_exited")
 			parent.cam.change_drag_margin(0.2,0.2)
+			
 			#parent.grabbing_shape.set_deferred("disabled",true)
 			parent.wall_slide_cooldown.start()
 		states.glide:
+			parent.jp_acceleration = -900
 			parent.jetpack_limit.wait_time = parent.jetpack_limit.time_left
 			parent.jetpack_limit.stop()
+			parent.propulsion.emitting = false
+
 
 
 func set_state(new_state):

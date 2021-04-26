@@ -13,12 +13,15 @@ signal state_change(states,state)
 signal killed()
 
 var velocity = Vector2()
-var WALL_JUMP_VELOCITY = Vector2(12*13,-200)
+var WALL_JUMP_VELOCITY = Vector2(12*6.5,-120)
 var KNOCKBACK_VELOCITY = Vector2(12*5,-100)
 
-export var move_speed = 12*10
-export var jump_velocity=-220
+export var move_speed = 12*6
+export var jump_velocity=-150
 export var gravity = 420
+var jp_acceleration = -900
+var jp_max_vel = -100
+var slide_velocity = 11
 
 var is_grounded
 var is_on_edge
@@ -28,10 +31,10 @@ var has_won = false
 var stick_to_wall = false
 var can_coyote_time = false
 var wall_direction = 1
-var snap = Vector2.DOWN*12
-var slide_velocity = 15
+var snap = Vector2.DOWN*2
 var current_state = null
 var has_gas = true
+
 
 onready var grabbing_shape = $Grabbing_shape
 onready var left_raycast = $WallGrabRaycast/Right
@@ -53,7 +56,8 @@ onready var coyote_timer = $CoyoteTimer
 onready var jetpack_limit = $JetpackLimit
 onready var attach_pos = $AttachPosition
 onready var sm = $Label
-
+onready var propulsion = $Body/propulsor
+onready var gas_meter = $ProgressBar
 # onready var jump_sound = $SFX/jumpsound
 # onready var hurt_sound = $SFX/hurtsound
 # onready var dead_sound = $SFX/deadsound
@@ -62,6 +66,7 @@ onready var sm = $Label
 var move_direction
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	gas_meter.hide()
 	connect("killed",get_parent().get_node("Background/GUI"),"_on_Player_killed")
 	connect("state_change",get_parent().get_node("Background/GUI"),"_on_Player_state_change")
 	connect("victory",get_parent().get_node("Background/GUI"),"_on_Player_victory")
@@ -79,8 +84,8 @@ func _apply_movement(delta):
 	is_grounded = is_on_floor()
 	
 func _apply_wall_stick():
-	snap = Vector2(wall_direction*32,0)
-	#velocity.x = wall_direction*100
+	#snap = Vector2(wall_direction*6,0)
+	velocity.x = wall_direction*10
 	
 func _apply_gravity(delta):
 	velocity.y +=gravity*delta
@@ -117,9 +122,14 @@ func _handle_move_input():
 		body.scale.x = move_direction
 		
 		
-func glide() -> void:
-	if jetpack_limit.time_left != 0: 
-		velocity.y = lerp(velocity.y,-100,0.13)
+func glide(delta) -> void:
+	gas_meter.show()
+	gas_meter.max_value = 4.5
+	gas_meter.value = jetpack_limit.time_left
+	if jetpack_limit.time_left != 0:
+		
+		velocity.y += jp_acceleration * delta
+		jp_acceleration = lerp(jp_acceleration,-300,0.08)
 
 
 func get_h_weight() -> float:
@@ -140,8 +150,8 @@ func _cap_gravity_wall_slide():
 	else: 
 		max_velocity = 6*24
 	velocity.y = min(velocity.y,max_velocity)
-	
-	
+
+
 func _update_wall_direction():
 	var is_near_wall_left = _check_is_valid_wall(left_raycast)
 	var is_near_wall_right= _check_is_valid_wall(right_raycast)

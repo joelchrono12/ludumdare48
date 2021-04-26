@@ -11,6 +11,12 @@ func _ready() -> void:
 	pass 
 func _on_EnergyOrb_body_entered(body: Node) -> void:
 	if body.name == "Player":
-		body.jetpack_limit.wait_time = 2.8
+		var available_space = 4.5 - body.jetpack_limit.wait_time 
+		if available_space > 2:
+			body.jetpack_limit.wait_time += 2
+			body.gas_meter.value += 2
+		else:
+			body.jetpack_limit.wait_time += available_space
+			body.gas_meter.value += available_space
 		body.has_gas = true
 		anim_player.play("fade")

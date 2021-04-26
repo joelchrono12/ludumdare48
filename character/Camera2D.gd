@@ -5,11 +5,12 @@ var enable_camera = false
 
 
 func _ready():
+	enable_camera = true
 	pass
 
 func _process(delta):
 	if enable_camera == true:
-		zoom = zoom.linear_interpolate(Vector2(.8,.8),0.1)
+		zoom = zoom.linear_interpolate(Vector2(1,1),0.1)
 	elif victory_zoom:
 		zoom = zoom.linear_interpolate(Vector2(0.6,0.6),0.1)
 
