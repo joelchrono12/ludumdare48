@@ -24,10 +24,14 @@ config/name="Ludum Dare 48"
 run/main_scene="res://levels/World.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+Sfx="*res://SFX.tscn"
+
 [display]
 
-window/size/width=210
-window/size/height=135
+window/size/width=252
+window/size/height=162
 window/size/resizable=false
 window/size/always_on_top=true
 window/size/test_width=1280

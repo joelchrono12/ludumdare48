@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/glide.wav-3f2489cd086a1505de7ef70219ba0b72.sample"
+
+[deps]
+
+source_file="res://assets/sounds/glide.wav"
+dest_files=[ "res://.import/glide.wav-3f2489cd086a1505de7ef70219ba0b72.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

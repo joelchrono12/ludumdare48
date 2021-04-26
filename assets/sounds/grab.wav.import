@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/grab.wav-babf53f0023c9a9340b5bf6dc934795d.sample"
+
+[deps]
+
+source_file="res://assets/sounds/grab.wav"
+dest_files=[ "res://.import/grab.wav-babf53f0023c9a9340b5bf6dc934795d.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
