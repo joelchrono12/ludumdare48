@@ -482,8 +482,7 @@ tracks/2/keys = {
 }
 
 [sub_resource type="Animation" id=13]
-length = 0.5
-loop = true
+length = 0.7
 tracks/0/type = "value"
 tracks/0/path = NodePath("icon:frame")
 tracks/0/interp = 1
@@ -507,6 +506,42 @@ tracks/1/keys = {
 "transitions": PoolRealArray( 0.24, 1.51572 ),
 "update": 0,
 "values": [ Vector2( 0, 0 ), Vector2( 0, -7.04409 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Sprite:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 0.164939, 1 ),
+"update": 0,
+"values": [ Vector2( 0, -1.5 ), Vector2( 0, -15 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Sprite:rotation_degrees")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.3, 0.6 ),
+"transitions": PoolRealArray( 1, 0.23, 0.0980731 ),
+"update": 0,
+"values": [ 0.0, 1.4, -40.0 ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Sprite:scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1.8, 1.8 ) ]
 }
 
 [sub_resource type="Animation" id=14]
@@ -684,10 +719,11 @@ color = Color( 1, 0.792157, 0, 1 )
 
 [node name="icon" type="Sprite" parent="Body"]
 visible = false
+position = Vector2( 0, -7.04409 )
 texture = ExtResource( 2 )
 hframes = 6
 vframes = 2
-frame = 1
+frame = 10
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="Body/icon"]
 occluder = SubResource( 4 )
@@ -707,8 +743,6 @@ anims/victory = SubResource( 13 )
 anims/land = SubResource( 14 )
 
 [node name="Sprite" type="Sprite" parent="Body"]
-position = Vector2( 0, -1.5 )
-scale = Vector2( 1.4, 1 )
 texture = ExtResource( 5 )
 hframes = 7
 vframes = 6
