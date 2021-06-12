@@ -10,6 +10,6 @@ func _process(delta: float) -> void:
 func _on_lava_body_entered(body: Node) -> void:
 	if body.name == "Player":
 		collision.set_deferred("disabled",true)
-		print("Player ded")
+#		print("Player ded")
 		body.die() 
 		body.emit_signal("killed")

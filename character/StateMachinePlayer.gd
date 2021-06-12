@@ -11,6 +11,7 @@ func _ready():
 	add_state("dead")
 	add_state("victory")
 	call_deferred("set_state",states.idle)
+	set_physics_process(false)
 
 
 func _input(event):
@@ -20,8 +21,13 @@ func _input(event):
 			if parent.is_on_floor() or !parent.coyote_timer.is_stopped():
 				parent.coyote_timer.stop()
 				parent.jump()
-	if [states.fall,states.jump].has(state) and parent.has_gas:
+	if [states.idle,states.move,states.fall,states.jump].has(state) and parent.has_gas:
 		if event.is_action_pressed("glide"):
+			if parent.is_on_floor():
+				parent.jump_glide()
+				parent.snap = Vector2.ZERO
+			else:
+				parent.velocity.y = 0
 			set_state(states.glide)
 	if state == states.glide:
 		if event.is_action_released("glide"):
@@ -35,7 +41,7 @@ func _input(event):
 			set_state(states.jump)
 
 func _state_logic(delta):
-	parent.sm.text = str(states.keys()[state])
+#	print(parent.jp_acceleration)
 	parent._apply_gravity(delta)
 	if state == states.glide:
 		parent.glide(delta)
@@ -124,7 +130,6 @@ func _enter_state(new_state,old_state):
 			Sfx.grab()
 			parent._stick_to_moving_walls()
 			parent.emit_signal("wall_slide_state")
-			parent.velocity.y = -20
 			parent.cam.change_drag_margin(0.1,0.1)
 			parent.anim_player.play("grab")
 			parent.body.scale.x = parent.wall_direction
@@ -138,6 +143,7 @@ func _enter_state(new_state,old_state):
 			parent.anim_player.play("victory")
 		states.glide:
 			Sfx.glide()
+
 			parent.anim_player.play("glide")
 			parent.jetpack_limit.start()
 
