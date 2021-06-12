@@ -11,6 +11,9 @@ onready var die = $die
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	$music.play()
+	for children in Sfx.get_children():
+		children.volume_db = -22.0
+		pass
 	pass # Replace with function body.
 func jump():
 	jump.play()

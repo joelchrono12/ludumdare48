@@ -17,6 +17,7 @@ var KNOCKBACK_VELOCITY = Vector2(12*5,-100)
 
 export var move_speed = 12*6
 export var jump_velocity=-160
+export var glide_jump = -20
 export var gravity = 420
 var jp_acceleration = -900
 var jp_max_vel = -100
@@ -54,10 +55,10 @@ onready var stick_to_wall_timer = $WallslideStick
 onready var coyote_timer = $CoyoteTimer
 onready var jetpack_limit = $JetpackLimit
 onready var attach_pos = $AttachPosition
-onready var sm = $Label
 onready var propulsion = $Body/propulsor
 onready var gas_meter = $ProgressBar
 onready var cam_shake = $CamShake
+onready var statemachine = $StateMachinePlayer
 # onready var jump_sound = $SFX/jumpsound
 # onready var hurt_sound = $SFX/hurtsound
 # onready var dead_sound = $SFX/deadsound
@@ -68,10 +69,10 @@ var move_direction
 func _ready():
 	gas_meter.hide()
 	connect("state_change",get_parent().get_node("Background/GUI"),"_on_Player_state_change")
-#	connect("victory",get_parent().get_node("Background/GUI"),"_on_Player_victory")
+	connect("victory",statemachine,"_on_Player_victory")
+	
 #	connect("wall_slide_exited",get_parent().get_node("Background/GUI"),"_on_Player_wall_slide_exited")
 #	connect("wall_slide_state",get_parent().get_node("Background/GUI"),"_on_Player_wall_slide_state")
-#	pass # Replace with function body.
 func _apply_movement(delta):
 	var was_on_floor = is_on_floor()
 	
@@ -118,14 +119,16 @@ func _handle_move_input():
 	velocity.x = lerp(velocity.x,move_speed*move_direction,get_h_weight())
 	if move_direction !=0:
 		body.scale.x = move_direction
-		
-		
+
+
+func jump_glide():
+	velocity.y = glide_jump
+
 func glide(delta) -> void:
 	gas_meter.show()
-	gas_meter.max_value = 4.5
+	gas_meter.max_value = 1.5
 	gas_meter.value = jetpack_limit.time_left
 	if jetpack_limit.time_left != 0:
-		
 		velocity.y += jp_acceleration * delta
 		jp_acceleration = lerp(jp_acceleration,-300,0.08)
 
@@ -185,6 +188,8 @@ func die():
 		velocity = knockback_velocity
 		body.scale.x = wall_direction if wall_direction!=0 else 1
 		is_dead = true
+		yield(get_tree().create_timer(0.4),"timeout")
+		get_tree().reload_current_scene()
 
 func victory():
 	velocity.x = 0

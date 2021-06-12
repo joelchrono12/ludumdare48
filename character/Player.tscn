@@ -1,11 +1,10 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://character/Player.gd" type="Script" id=1]
 [ext_resource path="res://character/Player.png" type="Texture" id=2]
 [ext_resource path="res://character/StateMachinePlayer.gd" type="Script" id=3]
 [ext_resource path="res://character/Camera2D.gd" type="Script" id=4]
 [ext_resource path="res://assets/player/player.png" type="Texture" id=5]
-[ext_resource path="res://fonts/mononoki_regular_16.tres" type="DynamicFont" id=6]
 
 [sub_resource type="Animation" id=1]
 resource_name = "cam_shake"
@@ -603,18 +602,6 @@ __meta__ = {
 "_edit_horizontal_guides_": [ 0.0, 0.0, 0.0 ]
 }
 
-[node name="Label" type="Label" parent="."]
-margin_left = -50.4505
-margin_top = 28.603
-margin_right = 45.5495
-margin_bottom = 44.603
-custom_fonts/font = ExtResource( 6 )
-text = "hola mundo"
-align = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="ProgressBar" type="ProgressBar" parent="."]
 visible = false
 margin_left = -16.0
@@ -623,7 +610,7 @@ margin_right = 16.0
 margin_bottom = -6.0
 rect_scale = Vector2( 1, 0.5 )
 size_flags_horizontal = 0
-max_value = 5.0
+max_value = 2.0
 percent_visible = false
 __meta__ = {
 "_edit_use_anchors_": false
@@ -645,6 +632,7 @@ limit_bottom = 500
 limit_smoothed = true
 smoothing_enabled = true
 smoothing_speed = 3.0
+drag_margin_bottom = 0.0
 editor_draw_drag_margin = true
 script = ExtResource( 4 )
 
@@ -761,7 +749,7 @@ wait_time = 0.1
 one_shot = true
 
 [node name="JetpackLimit" type="Timer" parent="."]
-wait_time = 4.5
+wait_time = 1.5
 one_shot = true
 
 [connection signal="killed" from="." to="StateMachinePlayer" method="_on_Player_killed"]
